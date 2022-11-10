@@ -1,17 +1,19 @@
 <?php
 
-// $senha = "alpina2022";
+require __DIR__ . '/db.php';
 
-// $password_hash = hash('sha512', $senha);
 try {
-    $db = new PDO("sqlite:base.sqlite");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //Error Handling
-    // $sql = "INSERT INTO users (userid, username, password) VALUES ('1', 'John', 'teste')";
+    // $sql = "INSERT INTO usergroups (group_name) VALUES ('visitor')";
     // $db->exec($sql);
 
-    
-    $sql = "INSERT INTO user_permissions (pid, permission_name, permission_type, userid) VALUES ('1', 'page_dashboard', '1', '1')";
-    $db->exec($sql);
+    // $sql = "INSERT INTO users (group_id, username, password) VALUES (3,'Visitante','visitante')";
+    // $db->exec($sql);
+
+    // $sql = "INSERT INTO group_permissions (permission_name, permission_type, group_id) VALUES ('page_dashboard', 1, 2)";
+    // $db->exec($sql);
+
+    // $sql = "INSERT INTO user_permissions (permission_name, permission_type, userid) VALUES ('page_dashboard', 0, 2)";
+    // $db->exec($sql);
 
 
 

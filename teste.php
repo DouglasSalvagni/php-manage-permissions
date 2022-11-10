@@ -1,81 +1,17 @@
 <?php
-class Acl
-{
 
-    private $db;
-    private $user_empty = false;
+require __DIR__ . '/acl.php';
 
-    //initialize the database object here
-    function __construct()
-    {
-        $this->db = new db;
-    }
+$permissions = new Acl();
 
-    function check($permission, $userid, $group_id)
-    {
+// $myuser->check('page_dashboard', 1, 1);
 
-        //we check the user permissions first
-        if (!$this->user_permissions($permission, $userid)) {
-            return false;
-        }
+echo 'Usuário id 1 do grupo 1 tem permissão para page_dashboard? ' . $permissions->check('page_dashboard', 1) . '<br>';
 
-        if (!$this->group_permissions($permission, $group_id) & $this->IsUserEmpty()) {
-            return false;
-        }
+echo 'Usuário id 1 do grupo 1 tem permissão para form_edit_user? ' . $permissions->check('form_edit_user', 1) . '<br>';
 
-        return true;
-    }
+echo 'Usuário id 2 do grupo 1 tem permissão para page_dashboard? ' . $permissions->check('page_dashboard', 2) . '<br>';
 
-    function user_permissions($permission, $userid)
-    {
-        $this->db->q("SELECT COUNT(*) AS count FROM user_permissions WHERE permission_name='$permission' AND userid='$userid' ");
+echo 'Usuário id 3 do grupo 2 tem permissão para form_edit_user? ' . $permissions->check('form_edit_user', 3) . '<br>';
 
-        $f = $this->db->f();
-
-        if ($f['count'] > 0) {
-            $this->db->q("SELECT * FROM user_permissions WHERE permission_name='$permission' AND userid='$userid' ");
-
-            $f = $this->db->f();
-
-            if ($f['permission_type'] == 0) {
-                return false;
-            }
-
-            return true;
-        }
-        $this->setUserEmpty('true');
-
-        return true;
-    }
-    function group_permissions($permission, $group_id)
-    {
-        $this->db->q("SELECT COUNT(*) AS count FROM group_permissions WHERE permission_name='$permission' AND group_id='$group_id' ");
-
-        $f = $this->db->f();
-
-        if ($f['count'] > 0) {
-            $this->db->q("SELECT * FROM group_permissions WHERE permission_name='$permission' AND group_id='$group_id' ");
-
-            $f = $this->db->f();
-
-            if ($f['permission_type'] == 0) {
-                return false;
-            }
-
-            return true;
-        }
-
-        return true;
-    }
-
-
-    function setUserEmpty($val)
-    {
-        $this->userEmpty = $val;
-    }
-
-    function isUserEmpty()
-    {
-        return $this->userEmpty;
-    }
-}
+echo 'Usuário id 3 do grupo 2 tem permissão para form_edit_user? ' . $permissions->check('form_edit_user', 4) . '<br>';
